@@ -8,10 +8,7 @@ services:
       dockerfile: docker/ddns/Dockerfile
     depends_on:
       - redis
-    environment:
-      DDNS_DOMAIN: d.example.net
-      DDNS_SOA_DOMAIN: ddns.example.net
-      DDNS_REDIS_HOST: redis:6379
+    env_file: .env
 
   powerdns:
     restart: unless-stopped
@@ -20,6 +17,7 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - ddns
+    env_file: .env
     environment:
       PDNS_REMOTE_HTTP_HOST: "ddns:8053"
 
